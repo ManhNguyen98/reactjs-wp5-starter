@@ -1,0 +1,9 @@
+body {
+  margin: 0;
+  background-color: #fff;
+}
+
+@import "bulma/bulma";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";

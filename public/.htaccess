@@ -1,0 +1,10 @@
+AuthType Basic
+AuthName "Please login."
+AuthUserFile /var/app/current/.htpasswd
+Require valid-user
+
+RewriteEngine On
+RewriteBase /
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^ index.html [L]
