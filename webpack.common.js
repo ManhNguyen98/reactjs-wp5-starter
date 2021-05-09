@@ -111,55 +111,59 @@ module.exports = {
         },
       },
       {
-        test: /\.(pdf)$/,
-        use: {
-          loader: 'file-loader',
-          options: {
-            limit: 100,
-            name: '[name].[hash:8].[ext]',
-            outputPath: 'static/pdf/',
-          },
-        },
-      },
-      {
-        test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
-        loader: require.resolve('url-loader'),
-        options: {
-          limit: 10000,
-          name: 'static/media/[name].[hash:8].[ext]',
-        },
-      },
-      {
-        test: cssRegex,
-        exclude: cssModuleRegex,
-        use: getStyleLoaders({
-          importLoaders: 1,
-        }),
-      },
-      {
-        test: cssModuleRegex,
-        use: getStyleLoaders({
-          importLoaders: 1,
-          modules: true,
-          getLocalIdent: getCSSModuleLocalIdent,
-        }),
-      },
-      {
-        test: sassRegex,
-        exclude: sassModuleRegex,
-        use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
-      },
-      {
-        test: sassModuleRegex,
-        use: getStyleLoaders(
+        oneOf: [
           {
-            importLoaders: 2,
-            modules: true,
-            getLocalIdent: getCSSModuleLocalIdent,
+            test: /\.(pdf)$/,
+            use: {
+              loader: 'file-loader',
+              options: {
+                limit: 100,
+                name: '[name].[hash:8].[ext]',
+                outputPath: 'static/pdf/',
+              },
+            },
           },
-          'sass-loader',
-        ),
-      },
+          {
+            test: [/\.bmp$/, /\.gif$/, /\.jpe?g$/, /\.png$/],
+            loader: require.resolve('url-loader'),
+            options: {
+              limit: 10000,
+              name: 'static/media/[name].[hash:8].[ext]',
+            },
+          },
+          {
+            test: cssRegex,
+            exclude: cssModuleRegex,
+            use: getStyleLoaders({
+              importLoaders: 1,
+            }),
+          },
+          {
+            test: cssModuleRegex,
+            use: getStyleLoaders({
+              importLoaders: 1,
+              modules: true,
+              getLocalIdent: getCSSModuleLocalIdent,
+            }),
+          },
+          {
+            test: sassRegex,
+            exclude: sassModuleRegex,
+            use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
+          },
+          {
+            test: sassModuleRegex,
+            use: getStyleLoaders(
+              {
+                importLoaders: 2,
+                modules: true,
+                getLocalIdent: getCSSModuleLocalIdent,
+              },
+              'sass-loader',
+            ),
+          },
+        ]
+      }
     ],
   },
 
@@ -171,6 +175,8 @@ module.exports = {
   },
 
   externals: {},
+
+  performance: false,
 
   optimization: {
     runtimeChunk: false,
@@ -199,6 +205,18 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: 'index.html',
       template: 'public/index.html',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        removeRedundantAttributes: true,
+        useShortDoctype: true,
+        removeEmptyAttributes: true,
+        removeStyleLinkTypeAttributes: true,
+        keepClosingSlash: true,
+        minifyJS: true,
+        minifyCSS: true,
+        minifyURLs: true,
+      },
     }),
     new HtmlWebpackPlugin({
       filename: 'robots.txt',

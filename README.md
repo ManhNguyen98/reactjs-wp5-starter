@@ -33,6 +33,7 @@ $ npm run start:mock
 - tailwindcss
 - bulma
 - styled-components
+- Storybook
 
 # Architecture
 ## Atomic Design
